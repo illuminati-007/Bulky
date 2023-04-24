@@ -56,7 +56,7 @@ public class CategoryController: Controller
         {
             return NotFound();
         }
-        Category categoryFromDb=  _db.Categories.Find(id);
+        Category? categoryFromDb=  _db.Categories.Find(id);
        // Category categoryFromDb1 = _db.Categories.FirstOrDefault(c=>c.Id==id);
        // Category categoryFromDb2 = _db.Categories.Where(u => u.Id==id).FirstOrDefault();
         
