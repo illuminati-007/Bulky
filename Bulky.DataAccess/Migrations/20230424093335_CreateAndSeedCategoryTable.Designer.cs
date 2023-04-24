@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BulkyWeb.Migrations
+namespace Bulky.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230424084054_CreateAndSeedCategoryTable")]
+    [Migration("20230424093335_CreateAndSeedCategoryTable")]
     partial class CreateAndSeedCategoryTable
     {
         /// <inheritdoc />
