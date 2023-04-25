@@ -13,10 +13,26 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Bulky.DataAccess\Bulky.DataAccess.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Areas\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\Category\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\Category\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\Category\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\Category\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Customer\Views\Home\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Customer\Views\Home\Privacy.cshtml" />
     </ItemGroup>
 
 </Project>

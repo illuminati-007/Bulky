@@ -8,18 +8,18 @@ namespace BulkyWeb.Controllers;
 
 public class CategoryController: Controller
 {
-    private readonly ICategoryRepository catRepo;
+    private readonly IUnitOfWork _unit;
 
-    public CategoryController(ICategoryRepository db)
+    public CategoryController(IUnitOfWork unit)
     {
-        catRepo = db;
+        _unit = unit;
     }
     
     //Get
 
     public IActionResult Index()
     {
-        List<Category> categories = catRepo.GetAll().ToList();
+        List<Category> categories = _unit.Category.GetAll().ToList();
         return View(categories);
     }
 
@@ -42,8 +42,8 @@ public class CategoryController: Controller
 
         if (ModelState.IsValid)
         {
-            catRepo.Add(c);
-            catRepo.Save();
+            _unit.Category.Add(c);
+            _unit.Save();
             TempData["success"] = "Category created successfully!";
             return RedirectToAction("Index");
         }
@@ -57,7 +57,7 @@ public class CategoryController: Controller
         {
             return NotFound();
         }
-        Category? categoryFromDb=  catRepo.Get(c=>c.Id==id);
+        Category? categoryFromDb=  _unit.Category.Get(c=>c.Id==id);
        // Category categoryFromDb1 = _db.Categories.FirstOrDefault(c=>c.Id==id);
        // Category categoryFromDb2 = _db.Categories.Where(u => u.Id==id).FirstOrDefault();
         
@@ -74,8 +74,8 @@ public class CategoryController: Controller
     {
         if (ModelState.IsValid)
         {
-            catRepo.Update(c);
-            catRepo.Save();
+            _unit.Category.Update(c);
+            _unit.Save();
             TempData["success"] = "Category edited successfully!";
             return RedirectToAction("Index");
         }
@@ -89,7 +89,7 @@ public class CategoryController: Controller
         {
             return NotFound();
         }
-        Category? categoryFromDb=  catRepo.Get(c=>c.Id==id);
+        Category? categoryFromDb=  _unit.Category.Get(c=>c.Id==id);
         if (categoryFromDb == null)
         {
             return NotFound();
@@ -101,13 +101,13 @@ public class CategoryController: Controller
     [HttpPost, ActionName("Delete")]
     public IActionResult DeletePOST(int? id)
     {
-        Category? c = catRepo.Get(c=>c.Id==id);
+        Category? c = _unit.Category.Get(c=>c.Id==id);
         if (c == null)
         {
             return NotFound();
         }
-        catRepo.Remove(c);
-        catRepo.Save();
+        _unit.Category.Remove(c);
+        _unit.Save();
         TempData["success"] = "Category deleted successfully!";
         return RedirectToAction("Index");
   
