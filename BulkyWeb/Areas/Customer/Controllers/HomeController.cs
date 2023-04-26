@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using BulkyWeb.Models;
+using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BulkyWeb.Areas.Customer.Controllers;

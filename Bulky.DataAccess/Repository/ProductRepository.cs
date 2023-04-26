@@ -5,18 +5,15 @@ using Bulky.Models;
 
 namespace Bulky.DataAccess.Repository;
 
-public class CategoryRepository: Repository<Category>, ICategoryRepository
+public class ProductRepository : Repository<Product>, IProductRepository
 {
     private ApplicationDbContext _db;
-
-    public CategoryRepository(ApplicationDbContext db):base (db)
+    public ProductRepository(ApplicationDbContext db) : base(db)
     {
         _db = db;
     }
-    public void Update(Category c)
+    public void Update(Product p)
     {
-        _db.Categories.Update(c);
+        _db.Products.Update(p);
     }
-
-  
 }

@@ -25,9 +25,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
@@ -41,7 +39,9 @@
                                  </li>
                     
                                 <li><hr class="dropdown-divider"></li>
-                             
+                             <li class="nav-item">
+                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
+                             </li>
                               </ul>
                             </li>
                 </ul>
@@ -51,7 +51,7 @@
 </header>
 <div class="container">
     <main role="main" class="pb-3">
-           <partial name="_Notification"/>
+           <partial name="_Notification.cshtml"/>
         @RenderBody()
     </main>
 </div>

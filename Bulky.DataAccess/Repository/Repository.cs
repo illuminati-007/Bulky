@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Bulky.DataAccess.Data;
 using Bulky.DataAccess.Repository.IRepository;
-using BulkyWeb.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bulky.DataAccess.Repository;

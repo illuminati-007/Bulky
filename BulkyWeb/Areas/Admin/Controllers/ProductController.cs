@@ -1,14 +1,15 @@
 ﻿using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BulkyWeb.Areas.Admin.Controllers;
 [Area("Admin")]
-public class CategoryController: Controller
+public class ProductController: Controller
 {
     private readonly IUnitOfWork _unit;
 
-    public CategoryController(IUnitOfWork unit)
+    public ProductController(IUnitOfWork unit)
     {
         _unit = unit;
     }
@@ -17,34 +18,41 @@ public class CategoryController: Controller
 
     public IActionResult Index()
     {
-        List<Category> categories = _unit.Category.GetAll().ToList();
-        return View(categories);
+        List<Product> products = _unit.Product.GetAll().ToList();
+      
+        return View(products);
     }
 
     public IActionResult Create()
     {
+        IEnumerable<SelectListItem> CategoryList = _unit.Category.GetAll().Select(c =>
+            new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            });
+       // ViewBag.CategoryList = CategoryList;
+       ViewData["CategoryList"] = CategoryList;
         return View();
     }
 
     [HttpPost]
-    public IActionResult Create(Category c)
+    public IActionResult Create(Product p)
     {
         // if (c.Name = c.DisplayOrder.ToString())
         // {
         //     ModelState.AddModelError("name" ,"The Display Order can not exactly match the Name");
         // }
-        if (c.Name !=null && c.Name.ToLower() == "test")
-        {
-            ModelState.AddModelError("", "Test name is invalid value");
-        }
+       
 
         if (ModelState.IsValid)
         {
-            _unit.Category.Add(c);
+            _unit.Product.Add(p);
             _unit.Save();
-            TempData["success"] = "Category created successfully!";
+            TempData["success"] = "Product created successfully!";
             return RedirectToAction("Index");
         }
+        
 
         return View();
     }
@@ -55,26 +63,26 @@ public class CategoryController: Controller
         {
             return NotFound();
         }
-        Category? categoryFromDb=  _unit.Category.Get(c=>c.Id==id);
+        Product? p=  _unit.Product.Get(c=>c.Id==id);
        // Category categoryFromDb1 = _db.Categories.FirstOrDefault(c=>c.Id==id);
        // Category categoryFromDb2 = _db.Categories.Where(u => u.Id==id).FirstOrDefault();
         
-        if (categoryFromDb == null)
+        if (p == null)
         {
             return NotFound();
         }
 
-        return View(categoryFromDb);
+        return View(p);
     }
 
     [HttpPost]
-    public IActionResult Edit(Category c)
+    public IActionResult Edit(Product p)
     {
         if (ModelState.IsValid)
         {
-            _unit.Category.Update(c);
+            _unit.Product.Update(p);
             _unit.Save();
-            TempData["success"] = "Category edited successfully!";
+            TempData["success"] = "Product edited successfully!";
             return RedirectToAction("Index");
         }
 
@@ -87,24 +95,24 @@ public class CategoryController: Controller
         {
             return NotFound();
         }
-        Category? categoryFromDb=  _unit.Category.Get(c=>c.Id==id);
-        if (categoryFromDb == null)
+        Product? p=  _unit.Product.Get(c=>c.Id==id);
+        if (p == null)
         {
             return NotFound();
         }
 
-        return View(categoryFromDb);
+        return View(p);
     }
 
     [HttpPost, ActionName("Delete")]
     public IActionResult DeletePOST(int? id)
     {
-        Category? c = _unit.Category.Get(c=>c.Id==id);
-        if (c == null)
+        Product? p = _unit.Product.Get(c=>c.Id==id);
+        if (p == null)
         {
             return NotFound();
         }
-        _unit.Category.Remove(c);
+        _unit.Product.Remove(p);
         _unit.Save();
         TempData["success"] = "Category deleted successfully!";
         return RedirectToAction("Index");
