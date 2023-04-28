@@ -101,4 +101,9 @@
       <None Remove="Properties\launchSettings.json" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Remove="wwwroot\images\product\e1596061-9fcc-4e39-b97a-f19f0beaff39.jpg" />
+      <Content Remove="wwwroot\images\product\90c79de3-9bcf-4a0f-a8cc-431388006a9a.jpg" />
+    </ItemGroup>
+
 </Project>
