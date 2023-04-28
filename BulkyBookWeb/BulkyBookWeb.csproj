@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.5" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
@@ -104,6 +105,10 @@
     <ItemGroup>
       <Content Remove="wwwroot\images\product\e1596061-9fcc-4e39-b97a-f19f0beaff39.jpg" />
       <Content Remove="wwwroot\images\product\90c79de3-9bcf-4a0f-a8cc-431388006a9a.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Areas\Identity\" />
     </ItemGroup>
 
 </Project>
