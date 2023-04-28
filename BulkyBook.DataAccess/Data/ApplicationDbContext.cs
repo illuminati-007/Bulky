@@ -54,7 +54,7 @@ namespace BulkyBook.DataAcess.Data
                 {
                     Id = 3,
                     Title = "Vanish in the Sunset",
-                    Author = "Julian Button",
+                        Author = "Julian Button",
                     Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     ISBN = "RITO5555501",
                     ListPrice = 55,
