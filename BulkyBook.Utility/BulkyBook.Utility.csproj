@@ -7,4 +7,8 @@
         <RootNamespace>Bulky.Utility</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.5" />
+    </ItemGroup>
+
 </Project>
