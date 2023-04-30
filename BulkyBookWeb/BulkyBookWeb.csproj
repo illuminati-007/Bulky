@@ -112,4 +112,9 @@
       <Folder Include="Areas\Identity\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Admin\Views\Company\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Company\Upsert.cshtml" />
+    </ItemGroup>
+
 </Project>
