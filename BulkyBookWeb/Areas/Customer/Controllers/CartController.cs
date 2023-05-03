@@ -121,7 +121,7 @@ public class CartController :Controller
         {
             //regular cust acc we need to capture payment
         //stripe logic
-        var domain = "https://localhost:7169/";
+        var domain =  Request.Scheme+ "://"+ Request.Host.Value +"/";
         var options = new SessionCreateOptions
         {
             

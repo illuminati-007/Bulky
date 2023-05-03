@@ -135,7 +135,7 @@ public class OrderController :Controller
         
     
        // stripe logic
-         var domain = "https://localhost:7169/";
+         var domain = Request.Scheme+ "://"+ Request.Host.Value +"/";
          var options = new SessionCreateOptions()
          {
              SuccessUrl = domain + $"admin/order/PaymentConfirmation?orderHeaderId={OrderVm.OrderHeader.Id}",
