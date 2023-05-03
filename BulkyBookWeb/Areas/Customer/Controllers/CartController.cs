@@ -4,6 +4,7 @@ using BulkyBook.Models;
 using BulkyBook.Models.ViewModels;
 using BulkyBook.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 
@@ -12,12 +13,14 @@ namespace BulkyBookWeb.Areas.Customer.Controllers;
 [Authorize]
 public class CartController :Controller
 {
+    private readonly IEmailSender _email;
     public readonly IUnitOfWork _unit;
     [BindProperty]
     public ShoppingCartVM ShoppingCartVm { get; set; }
 
-    public CartController(IUnitOfWork unit)
+    public CartController(IUnitOfWork unit,IEmailSender email)
     {
+        _email = email;
         _unit = unit;
     }
         
@@ -97,7 +100,7 @@ public class CartController :Controller
             //comp user
             ShoppingCartVm.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
             ShoppingCartVm.OrderHeader.OrderStatus = SD.StatusApproved;
-        }
+        }   
         _unit.OrderHeader.Add(ShoppingCartVm.OrderHeader);
         _unit.Save();
 
@@ -172,8 +175,13 @@ public class CartController :Controller
                 _unit.OrderHeader.UpdateStatus(id,SD.StatusApproved,SD.PaymentStatusApproved);
                 _unit.Save();
             }
+            HttpContext.Session.Clear();
         }
 
+        _email.SendEmailAsync(orderHeader.ApplicationUser.Email, "New Order illuminati Bulky book",
+            $"<p>New Order Cread -- {orderHeader.Id}</p>");
+        
+        
         List<ShoppingCart> shoppingCarts =
             _unit.ShoppingCart.GetAll(u =>
                 u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
@@ -193,10 +201,12 @@ public class CartController :Controller
     public IActionResult Minus(int cartId)
     {
         
-        var cartFromDb = _unit.ShoppingCart.Get(c => c.Id == cartId);
+        var cartFromDb = _unit.ShoppingCart.Get(c => c.Id == cartId,tracked:true);
         if (cartFromDb.Count <= 1)
         {
             _unit.ShoppingCart.Remove(cartFromDb);
+            HttpContext.Session.SetInt32(SD.SessionCart, _unit.ShoppingCart.
+                GetAll(c=>c.ApplicationUserId== cartFromDb.ApplicationUserId).Count()-1);
         }
         else
         {
@@ -210,8 +220,10 @@ public class CartController :Controller
 
     public IActionResult Remove(int cartId)
     {
-        var cartFromDb = _unit.ShoppingCart.Get(c => c.Id == cartId);
+        var cartFromDb = _unit.ShoppingCart.Get(c => c.Id == cartId, tracked:true);
         _unit.ShoppingCart.Remove(cartFromDb);
+        HttpContext.Session.SetInt32(SD.SessionCart, _unit.ShoppingCart.
+            GetAll(c=>c.ApplicationUserId== cartFromDb.ApplicationUserId).Count()-1);
         _unit.Save();
         return RedirectToAction(nameof(Index));
     }
